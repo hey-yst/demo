@@ -1,0 +1,72 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Image Maps test</title>
+  <link rel="stylesheet" href="./index.css">
+  <script type="text/javascript" language="javascript" src="javascript/jquery-1.4.2.min.js"></script>
+  <script type="text/javascript" language="javascript" src="javascript/jquery.image-maps.js"></script>
+  <script type="text/javascript" language="javascript">
+    $(function () {
+      $('#imgMap').imageMaps();
+    });
+  </script>
+</head>
+
+<body>
+  <input type="file" id="fileinp" @change="processFiles(this.files)">
+  <div id="debug"></div>
+ 
+  <div id="imgMap">
+    <img src="" name="test" id="dropBox" width="400" class="map" border="0" height="400" usemap="#Map" ref='imageMaps' />
+    <map name="Map" id="Map">
+    </map>
+    <!-- 信息填写 -->
+    <div class="bombBox">
+      <p class="title">填写热点链接</p>
+      <hr class="hr">
+      <p class="link"><span>link:</span>
+        <input type="text" size="60" value="http://" data-id="" />
+      </p>
+      <p class="btn">
+        <button class="sure">确定</button>
+        <button class="Cancel">取消</button>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      $('.button-conrainer input').click(function () {
+        $('.map-position ').unbind('dblclick').dblclick(function () {
+          var k = $(this)['0'].attributes.ref.value - 1 + ''
+          var lll = $('.link input').val().split('//')[1]
+          var vvv = $('#Map area')[k].host
+          if (!lll) {
+            $('.link input')['0'].value = 'http://'
+          } else {
+            $('.link input')['0'].value = 'http://' + vvv
+          }
+          $('.bombBox').show()
+          // 点击取消
+          $('.Cancel').unbind('click').click(function () {
+            $('.bombBox').hide()
+          })
+          // 点击确定 热点链接添加完成
+          $('.sure').unbind('click').click(function () {
+
+            $('.bombBox').hide()
+            var value = $('.link input').val()
+            $('#Map area')[k].href = value
+
+          })
+
+        })
+      })
+      })
+  </script>
+</body>
+
+</html>
